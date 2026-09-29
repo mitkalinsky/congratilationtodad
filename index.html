@@ -245,14 +245,14 @@
         <!-- Circuit Matrix Background Canvas -->
         <canvas id="circuit-bg"></canvas>
 
-        <!-- OS Title Bar / System Tray inside screen -->
+        <!-- заголовок на месте назв сайта -->
         <header class="relative z-30 px-3 py-2 border-b border-[var(--phosphor-dim)] bg-black/60 backdrop-blur-sm flex flex-wrap items-center justify-between text-xs">
           <div class="flex items-center gap-2">
             <span class="px-1.5 py-0.5 bg-[var(--phosphor-color)] text-black font-bold font-pixel text-[10px]">DAD-OS</span>
             <span class="font-vt text-lg tracking-wide hidden sm:inline">RELEASE v6.2 [BIRTHDAY_EDITION]</span>
           </div>
 
-          <!-- Top Navigation Tabs (Window Switcher) -->
+          <!-- навигация по окнам -->
           <nav class="flex items-center gap-1 sm:gap-2 my-1 sm:my-0">
             <button onclick="switchTab('home')" id="tab-btn-home" class="nav-tab active-tab px-3 py-1 font-pixel text-[10px] rounded border border-[var(--phosphor-color)] bg-[var(--phosphor-dim)]/40 text-[var(--phosphor-color)] flex items-center gap-1.5 transition-all">
               <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
@@ -296,7 +296,7 @@
                     С ДНЕМ РОЖДЕНИЯ, ПАПА!
                   </h1>
                   <p class="font-vt text-xl sm:text-2xl text-zinc-300 mt-1">
-                    финансовый директор • программист • специалист по починке  • путешественник по России  • 1 разряд по плаванию
+                    • финансовый директор • программист • специалист по починке  • путешественник по России  • 1 разряд по плаванию
                   </p>
                 </div>
                 <div class="flex items-center gap-2">
@@ -344,7 +344,6 @@
                       <span>Загрузить фото папы (PNG без фона)</span>
                       <input type="file" id="portraitUpload" accept="image/*" class="hidden" onchange="handleDadPortraitUpload(event)">
                     </label>
-                    <p class="text-[10px] text-zinc-400 mt-1">Идеально смотрится вырезанная фотография по контуру</p>
                   </div>
                 </div>
 
@@ -372,28 +371,28 @@
                 <div class="border border-[var(--phosphor-dim)] bg-black/70 p-4 sm:p-5 rounded-lg text-sm sm:text-base leading-relaxed space-y-3 font-mono">
                   <div class="flex items-center justify-between text-xs text-[var(--phosphor-dim)] border-b border-zinc-800 pb-2">
                     <span class="font-pixel text-[9px] text-[var(--phosphor-color)]">MESSAGE_DECRYPTED.TXT</span>
-                    <span>ORIGIN: ТВОИ ЛЮБЯЩИЕ ДЕТИ</span>
+                    <span>ORIGIN: Дашенька </span>
                   </div>
                   <p class="text-zinc-200">
                     <span class="text-[var(--phosphor-color)] font-bold">> ПАПА, С ДНЕМ РОЖДЕНИЯ!</span><br>
-                    Ты умеешь компилировать сложные задачи в простые и элегантные решения. Будь то сложнейший код, инженерный расчет микросхем или высокоточный финансовый портфель — в твоих руках всё работает с гарантированным аптаймом 99.99%!
+                    Ты умеешь так много: компилировать сложные задачи в простые и элегантные решения. Будь то код, 1С-база или система работы предприятия — в твоих руках всё работает гарантированно на 99.99% (на 0,01 надо было поспать)!
                   </p>
                   <p class="text-zinc-300">
-                    Спасибо тебе за то, что ты не просто гениальный технарь и крутой финансист, но в первую очередь — наш самый лучший, мудрый, добрый и надежный папа на свете. Твоя поддержка надежнее любого облачного хранилища с тройным бэкапом!
+                    Ты мой самый лучший, добрый и надежный папа на свете. Твоя поддержка надежнее любого облачного хранилища с тройным бэкапом (похихикай, пж)!
                   </p>
                   <div class="p-3 bg-[var(--phosphor-color)]/10 border-l-4 border-[var(--phosphor-color)] text-xs text-[var(--phosphor-color)] italic">
-                    «Пусть каждый твой жизненный проект приносит максимальный ROI счастья, нервы будут крепче оптоволокна, а в семье всегда царит полный консенсус!»
+                    «Пусть каждый твой жизненный проект приносит максимальный ROI счастья, нервы будут крепче оптоволокна, а в семье всегда царит спокойствие!»
                   </div>
                 </div>
 
-                <!-- Hardware Performance Gauges (Interactive Progress Bars) -->
+                <!-- метрики -->
                 <div class="border border-[var(--phosphor-dim)] bg-black/50 p-4 rounded-lg space-y-3">
                   <h3 class="font-pixel text-xs text-[var(--phosphor-color)] flex items-center gap-2">
                     <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
                     <span>СИСТЕМНЫЕ МЕТРИКИ ПАПЫ [DIAGNOSTIC]</span>
                   </h3>
 
-                  <!-- Metric 1 -->
+                  <!-- метрика 1 -->
                   <div class="space-y-1">
                     <div class="flex justify-between text-xs font-mono">
                       <span>Инженерная смекалка & Ремонт всего на свете</span>
@@ -404,7 +403,7 @@
                     </div>
                   </div>
 
-                  <!-- Metric 2 -->
+                  <!-- метрика 2 -->
                   <div class="space-y-1">
                     <div class="flex justify-between text-xs font-mono">
                       <span>Финансовая аналитика & Точность прогнозов</span>
@@ -415,7 +414,7 @@
                     </div>
                   </div>
 
-                  <!-- Metric 3 -->
+                  <!-- метрика 2 -->
                   <div class="space-y-1">
                     <div class="flex justify-between text-xs font-mono">
                       <span>Юмор, теплота и забота о семье</span>
@@ -427,11 +426,11 @@
                   </div>
                 </div>
 
-                <!-- Quick Action Buttons -->
+                <!-- экшн кнопки -->
                 <div class="grid grid-cols-2 gap-3 pt-2">
                   <button onclick="switchTab('facts')" class="p-3 bg-zinc-900 border border-[var(--phosphor-dim)] hover:border-[var(--phosphor-color)] hover:bg-[var(--phosphor-color)]/10 text-xs font-pixel rounded text-center transition-all flex items-center justify-center gap-2">
                     <i data-lucide="image" class="w-4 h-4 text-[var(--phosphor-color)]"></i>
-                    <span>ОТПУСКНЫЕ ФОТО</span>
+                    <span>АРХИВ</span>
                   </button>
                   <button onclick="switchTab('schedule')" class="p-3 bg-zinc-900 border border-[var(--phosphor-dim)] hover:border-[var(--phosphor-color)] hover:bg-[var(--phosphor-color)]/10 text-xs font-pixel rounded text-center transition-all flex items-center justify-center gap-2">
                     <i data-lucide="user-check" class="w-4 h-4 text-[var(--phosphor-color)]"></i>
