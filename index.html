@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DAD-OS v5.0 // Happy Birthday Father!</title>
-  <!-- Google Fonts for Retro Pixel & Tech vibe -->
+  <title>DAD-OS v5.0 // Happy Birthday, Daddy!</title>
+  <!-- шрифты -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Canvas Confetti for Birthday Celebrations -->
+  <!-- конфети -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <!-- Lucide Icons -->
+  <!-- стекляные штуки -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -62,7 +62,7 @@
       font-family: 'VT323', monospace;
     }
 
-    /* CRT Monitor Frame & Curved Glass Effect */
+    /* монитор */
     .crt-monitor-case {
       background: linear-gradient(145deg, #373b39, #202221);
       box-shadow: 
@@ -84,7 +84,7 @@
       padding: 16px;
     }
 
-    /* Real CRT Glass Screen Overlay */
+    /* наложение экрана стекло сверху */
     .crt-screen {
       background-color: var(--phosphor-bg);
       position: relative;
@@ -116,7 +116,7 @@
       z-index: 41;
     }
 
-    /* Flickering scanline sweep */
+    /* сканнер штучка */
     .scanline-bar {
       position: absolute;
       top: -100px;
@@ -134,7 +134,7 @@
       100% { top: 100%; }
     }
 
-    /* Laser scanner over dad portrait */
+    /* сканер над фоткой */
     .portrait-scanner {
       position: absolute;
       top: 0;
@@ -153,7 +153,7 @@
       100% { top: 96%; opacity: 0.3; }
     }
 
-    /* Phosphor Glow */
+    /* свечение фосфорное */
     .glow-text {
       text-shadow: 0 0 6px var(--phosphor-glow), 0 0 12px var(--phosphor-glow);
     }
@@ -161,7 +161,7 @@
       box-shadow: 0 0 15px var(--phosphor-glow), inset 0 0 10px rgba(0, 255, 102, 0.05);
     }
 
-    /* Custom Retro Scrollbar */
+    /* ретро скроллбар r */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -178,7 +178,7 @@
       background: var(--phosphor-color);
     }
 
-    /* Screen Power Off Animation */
+    /* анимация отключения экрана */
     .power-off {
       animation: crtTurnOff 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards !important;
     }
@@ -197,13 +197,13 @@
       100% { transform: scale(1, 1); filter: brightness(1); }
     }
 
-    /* Retro Window Titlebar */
+    /* ретро окно тайтлбар */
     .window-header {
       background: linear-gradient(90deg, var(--phosphor-dim), #05260f);
       border-bottom: 2px solid var(--phosphor-color);
     }
 
-    /* Circuit Board Canvas */
+    /* доска объявлений типа */
     #circuit-bg {
       position: absolute;
       top: 0;
@@ -218,7 +218,7 @@
 </head>
 <body class="p-2 sm:p-4 md:p-8 flex flex-col items-center justify-center min-h-screen">
 
-  <!-- Audio Engine & Synth Status Badge -->
+  <!-- аудио & Synth Status Badge -->
   <div class="w-full max-w-6xl mb-3 flex flex-wrap items-center justify-between gap-3 text-xs tracking-wider opacity-80 px-2">
     <div class="flex items-center gap-2">
       <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -235,7 +235,7 @@
     </div>
   </div>
 
-  <!-- The CRT Monitor Body -->
+  <!-- CRT Monitor Body -->
   <main class="w-full max-w-6xl crt-monitor-case p-4 sm:p-7 md:p-10 transition-all">
     <div class="crt-bezel-inner">
       <!-- CRT Screen Area -->
@@ -249,7 +249,7 @@
         <header class="relative z-30 px-3 py-2 border-b border-[var(--phosphor-dim)] bg-black/60 backdrop-blur-sm flex flex-wrap items-center justify-between text-xs">
           <div class="flex items-center gap-2">
             <span class="px-1.5 py-0.5 bg-[var(--phosphor-color)] text-black font-bold font-pixel text-[10px]">DAD-OS</span>
-            <span class="font-vt text-lg tracking-wide hidden sm:inline">RELEASE v5.0 [BIRTHDAY_EDITION]</span>
+            <span class="font-vt text-lg tracking-wide hidden sm:inline">RELEASE v6.2 [BIRTHDAY_EDITION]</span>
           </div>
 
           <!-- Top Navigation Tabs (Window Switcher) -->
@@ -260,7 +260,7 @@
             </button>
             <button onclick="switchTab('facts')" id="tab-btn-facts" class="nav-tab px-3 py-1 font-pixel text-[10px] rounded border border-[var(--phosphor-dim)] hover:border-[var(--phosphor-color)] text-[var(--phosphor-dim)] hover:text-[var(--phosphor-color)] flex items-center gap-1.5 transition-all">
               <i data-lucide="database" class="w-3.5 h-3.5"></i>
-              <span>ДОСЬЕ И АРХИВ</span>
+              <span>ДОСЬЕ</span>
             </button>
             <button onclick="switchTab('schedule')" id="tab-btn-schedule" class="nav-tab px-3 py-1 font-pixel text-[10px] rounded border border-[var(--phosphor-dim)] hover:border-[var(--phosphor-color)] text-[var(--phosphor-dim)] hover:text-[var(--phosphor-color)] flex items-center gap-1.5 transition-all">
               <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
@@ -272,19 +272,19 @@
             </button>
           </nav>
 
-          <!-- System Clock & Uptime -->
+          <!-- время счетчик -->
           <div class="hidden md:flex items-center gap-3 font-mono text-[11px] text-[var(--phosphor-dim)]">
             <span id="systemUptime">UPTIME: 99.999%</span>
             <span id="crtClock" class="font-bold text-[var(--phosphor-color)]">00:00:00</span>
           </div>
         </header>
 
-        <!-- Window Body Workspace -->
+        <!-- окно основная часть -->
         <div class="relative z-20 p-4 sm:p-6 md:p-8 flex-1 overflow-y-auto max-h-[600px] md:max-h-[660px]">
           
-          <!-- TAB 1: Главная (BIOS / Core) -->
+          <!-- Окно 1: Главная (BIOS / Core) -->
           <section id="tab-home" class="space-y-6">
-            <!-- Greeting Banner -->
+            <!-- баннер -->
             <div class="border border-[var(--phosphor-color)] bg-black/50 p-4 sm:p-5 rounded-lg glow-box relative overflow-hidden">
               <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
@@ -296,13 +296,13 @@
                     С ДНЕМ РОЖДЕНИЯ, ПАПА!
                   </h1>
                   <p class="font-vt text-xl sm:text-2xl text-zinc-300 mt-1">
-                    Главный Инженер Семьи • Senior Кодер Жизненного Баланса • Архитектор Финансового Успеха
+                    финансовый директор • программист • специалист по починке  • путешественник по России  • 
                   </p>
                 </div>
                 <div class="flex items-center gap-2">
                   <button onclick="triggerBirthdayConfetti()" class="px-4 py-2.5 bg-[var(--phosphor-color)] text-black font-pixel text-xs rounded hover:brightness-125 transition-all shadow-[0_0_15px_var(--phosphor-glow)] flex items-center gap-2">
                     <i data-lucide="cake" class="w-4 h-4"></i>
-                    <span>ЗАПУСТИТЬ ТОРТ.EXE</span>
+                    <span>ЗАПУСТИТЬ ДР.EXE</span>
                   </button>
                 </div>
               </div>
@@ -311,50 +311,29 @@
             <!-- Central Content: Dad Silhouette Hologram & System Specs Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               
-              <!-- Left: Holographic Cutout Portrait Area -->
+              <!-- под папу штука -->
               <div class="lg:col-span-5 flex flex-col items-center">
                 <div class="w-full relative border-2 border-dashed border-[var(--phosphor-color)]/60 rounded-xl bg-black/40 p-4 flex flex-col items-center justify-center min-h-[380px] glow-box group">
                   
-                  <!-- Floating Technical Markers -->
+                  <!-- висячие маркеры -->
                   <div class="absolute top-2 left-2 text-[9px] font-mono opacity-60">TARGET: DAD_HEAD_NODE</div>
                   <div class="absolute top-2 right-2 text-[9px] font-mono opacity-60">STATUS: 100% LEGEND</div>
                   <div class="absolute bottom-2 left-2 text-[9px] font-mono opacity-60">SECURITY: MAXIMUM</div>
                   <div class="absolute bottom-2 right-2 text-[9px] font-mono opacity-60">FOV: 360° CARE</div>
 
-                  <!-- Scanning Line Laser Effect -->
+                  <!-- сканнер -->
                   <div class="portrait-scanner"></div>
 
-                  <!-- Cutout Image Silhouette Container -->
+                  <!-- контейнер для силуэта  -->
                   <div class="relative w-64 h-80 flex items-center justify-center overflow-hidden">
-                    <!-- Default SVG Graphic of an Engineering Dad with Glasses & Financial Charts -->
-                    <div id="dadPhotoContainer" class="w-full h-full flex items-center justify-center transition-all duration-300">
-                      <svg id="defaultSilhouette" class="w-full h-full object-contain filter drop-shadow-[0_0_12px_var(--phosphor-color)]" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Hologram Lines Effect -->
-                        <path d="M100 20 C80 20 70 35 70 55 C70 70 80 85 100 85 C120 85 130 70 130 55 C130 35 120 20 100 20Z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
-                        <!-- Dad's Classic Smart Glasses -->
-                        <rect x="80" y="48" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2.5" fill="none"/>
-                        <rect x="104" y="48" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2.5" fill="none"/>
-                        <line x1="96" y1="53" x2="104" y2="53" stroke="currentColor" stroke-width="2.5"/>
-                        <!-- Smile / Beard -->
-                        <path d="M92 72 Q100 78 108 72" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                        <path d="M85 64 Q100 85 115 64" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/>
-                        <!-- Cyber Neck & Shoulders Body Contour -->
-                        <path d="M85 85 L70 100 L40 120 L30 190 L170 190 L160 120 L130 100 L115 85 Z" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="2"/>
-                        <!-- Engineering Chest Blueprint lines -->
-                        <line x1="70" y1="120" x2="130" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
-                        <line x1="100" y1="100" x2="100" y2="185" stroke="currentColor" stroke-width="1.5"/>
-                        <circle cx="100" cy="140" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <!-- Heart Core Inside Dad -->
-                        <path d="M95 138 C95 134 98 132 100 134 C102 132 105 134 105 138 C105 142 100 146 100 146 C100 146 95 142 95 138 Z" fill="currentColor"/>
-                        <!-- Golden Ratio & Financial Bars -->
-                        <rect x="52" y="150" width="8" height="25" fill="currentColor" fill-opacity="0.4"/>
-                        <rect x="64" y="140" width="8" height="35" fill="currentColor" fill-opacity="0.6"/>
-                        <rect x="128" y="135" width="8" height="40" fill="currentColor" fill-opacity="0.6"/>
-                        <rect x="140" y="145" width="8" height="30" fill="currentColor" fill-opacity="0.4"/>
-                      </svg>
-                      <!-- Uploaded Custom Cutout Image (initially hidden) -->
-                      <img id="customDadImage" src="" alt="Любимый Папа" class="hidden w-full h-full object-contain filter drop-shadow-[0_0_15px_var(--phosphor-glow)]">
-                    </div>
+                   <!-- Контейнер с фотографией папы -->
+                  <div id="dadPhotoContainer" class="w-full h-full flex items-center justify-center transition-all duration-300">
+                    <img 
+                    src="папа.png" 
+                    alt="Любимый Папа" 
+                    class="w-full h-full object-contain filter drop-shadow-[0_0_15px_var(--phosphor-glow)]"
+                    >
+                  </div>
 
                   </div>
 
