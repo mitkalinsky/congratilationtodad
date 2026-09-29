@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAD-OS v5.0 // Happy Birthday Father!</title>
+  <!-- Google Fonts for Retro Pixel & Tech vibe -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti for Birthday Celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --phosphor-color: #00ff66;
+      --phosphor-dim: #008833;
+      --phosphor-glow: rgba(0, 255, 102, 0.45);
+      --phosphor-bg: #031408;
+      --crt-case: #2a2c2b;
+      --crt-case-border: #404341;
+      --crt-case-dark: #171817;
+    }
+
+    [data-theme="amber"] {
+      --phosphor-color: #ffb000;
+      --phosphor-dim: #996a00;
+      --phosphor-glow: rgba(255, 176, 0, 0.45);
+      --phosphor-bg: #140d02;
+    }
+
+    [data-theme="cyan"] {
+      --phosphor-color: #00f0ff;
+      --phosphor-dim: #00848c;
+      --phosphor-glow: rgba(0, 240, 255, 0.45);
+      --phosphor-bg: #021214;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      background-color: #0c0d0e;
+      background-image: radial-gradient(#1f2220 1px, transparent 1px);
+      background-size: 24px 24px;
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--phosphor-color);
+      overflow-x: hidden;
+    }
+
+    .font-pixel {
+      font-family: 'Press Start 2P', monospace;
+    }
+
+    .font-vt {
+      font-family: 'VT323', monospace;
+    }
+
+    /* CRT Monitor Frame & Curved Glass Effect */
+    .crt-monitor-case {
+      background: linear-gradient(145deg, #373b39, #202221);
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.95),
+        inset 0 3px 6px rgba(255, 255, 255, 0.15),
+        inset 0 -8px 16px rgba(0, 0, 0, 0.8),
+        0 0 0 12px #282a29,
+        0 0 0 16px #1b1c1b;
+      border-radius: 36px;
+      position: relative;
+    }
+
+    .crt-bezel-inner {
+      background: #111312;
+      border-radius: 24px;
+      box-shadow: 
+        inset 0 10px 25px rgba(0, 0, 0, 0.9),
+        inset 0 0 15px rgba(0, 0, 0, 0.95);
+      padding: 16px;
+    }
+
+    /* Real CRT Glass Screen Overlay */
+    .crt-screen {
+      background-color: var(--phosphor-bg);
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.8);
+      transition: filter 0.2s ease, opacity 0.3s ease;
+    }
+
+    .crt-screen::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+      z-index: 40;
+      background-size: 100% 3px, 4px 100%;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    .crt-screen::after {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: radial-gradient(circle at center, transparent 65%, rgba(0, 0, 0, 0.6) 100%);
+      pointer-events: none;
+      z-index: 41;
+    }
+
+    /* Flickering scanline sweep */
+    .scanline-bar {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.04), transparent);
+      animation: sweep 8s linear infinite;
+      pointer-events: none;
+      z-index: 42;
+    }
+
+    @keyframes sweep {
+      0% { top: -120px; }
+      100% { top: 100%; }
+    }
+
+    /* Laser scanner over dad portrait */
+    .portrait-scanner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--phosphor-color);
+      box-shadow: 0 0 15px var(--phosphor-color);
+      animation: laser-scan 3.5s ease-in-out infinite alternate;
+      z-index: 10;
+    }
+
+    @keyframes laser-scan {
+      0% { top: 2%; opacity: 0.2; }
+      50% { opacity: 1; }
+      100% { top: 96%; opacity: 0.3; }
+    }
+
+    /* Phosphor Glow */
+    .glow-text {
+      text-shadow: 0 0 6px var(--phosphor-glow), 0 0 12px var(--phosphor-glow);
+    }
+    .glow-box {
+      box-shadow: 0 0 15px var(--phosphor-glow), inset 0 0 10px rgba(0, 255, 102, 0.05);
+    }
+
+    /* Custom Retro Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #041006;
+      border: 1px solid var(--phosphor-dim);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--phosphor-dim);
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--phosphor-color);
+    }
+
+    /* Screen Power Off Animation */
+    .power-off {
+      animation: crtTurnOff 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards !important;
+    }
+    @keyframes crtTurnOff {
+      0% { transform: scale(1, 1); filter: brightness(1); }
+      40% { transform: scale(1, 0.005); filter: brightness(4); }
+      100% { transform: scale(0, 0); filter: brightness(0); opacity: 0; }
+    }
+
+    .power-on {
+      animation: crtTurnOn 0.5s ease-out forwards;
+    }
+    @keyframes crtTurnOn {
+      0% { transform: scale(0.01, 0.002); filter: brightness(10); opacity: 1; }
+      50% { transform: scale(1, 0.005); filter: brightness(5); }
+      100% { transform: scale(1, 1); filter: brightness(1); }
+    }
+
+    /* Retro Window Titlebar */
+    .window-header {
+      background: linear-gradient(90deg, var(--phosphor-dim), #05260f);
+      border-bottom: 2px solid var(--phosphor-color);
+    }
+
+    /* Circuit Board Canvas */
+    #circuit-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.15;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="p-2 sm:p-4 md:p-8 flex flex-col items-center justify-center min-h-screen">
+
+  <!-- Audio Engine & Synth Status Badge -->
+  <div class="w-full max-w-6xl mb-3 flex flex-wrap items-center justify-between gap-3 text-xs tracking-wider opacity-80 px-2">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-pixel text-[10px]">CPU: INTEL 80486-DX2 // 66MHz // DAD-SYS ACTIVE</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="hidden sm:inline">ФОСФОР:</span>
+      <button onclick="setTheme('green')" class="px-2 py-0.5 rounded border border-emerald-500/50 hover:bg-emerald-500/20 text-emerald-400 font-pixel text-[9px]">P1 GREEN</button>
+      <button onclick="setTheme('amber')" class="px-2 py-0.5 rounded border border-amber-500/50 hover:bg-amber-500/20 text-amber-400 font-pixel text-[9px]">P3 AMBER</button>
+      <button onclick="setTheme('cyan')" class="px-2 py-0.5 rounded border border-cyan-500/50 hover:bg-cyan-500/20 text-cyan-400 font-pixel text-[9px]">P4 CYAN</button>
+      <button id="soundToggleBtn" onclick="toggleAudio()" class="ml-2 px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-700 flex items-center gap-1.5 font-pixel text-[9px]">
+        <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> <span>SFX: ON</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- The CRT Monitor Body -->
+  <main class="w-full max-w-6xl crt-monitor-case p-4 sm:p-7 md:p-10 transition-all">
+    <div class="crt-bezel-inner">
+      <!-- CRT Screen Area -->
+      <div id="screenContainer" class="crt-screen relative min-h-[640px] md:min-h-[720px] flex flex-col justify-between border-2 border-[#1f4e2b]">
+        <!-- Animated scanline sweeper -->
+        <div class="scanline-bar"></div>
+        <!-- Circuit Matrix Background Canvas -->
+        <canvas id="circuit-bg"></canvas>
+
+        <!-- OS Title Bar / System Tray inside screen -->
+        <header class="relative z-30 px-3 py-2 border-b border-[var(--phosphor-dim)] bg-black/60 backdrop-blur-sm flex flex-wrap items-center justify-between text-xs">
+          <div class="flex items-center gap-2">
+            <span class="px-1.5 py-0.5 bg-[var(--phosphor-color)] text-black font-bold font-pixel text-[10px]">DAD-OS</span>
+            <span class="font-vt text-lg tracking-wide hidden sm:inline">RELEASE v5.0 [BIRTHDAY_EDITION]</span>
+          </div>
+
+          <!-- Top Navigation Tabs (Window Switcher) -->
+          <nav class="flex items-center gap-1 sm:gap-2 my-1 sm:my-0">
+            <button onclick="switchTab('home')" id="tab-btn-home" class="nav-tab active-tab px-3 py-1 font-pixel text-[10px] rounded border border-[var(--phosphor-color)] bg-[var(--phosphor-dim)]/40 text-[var(--phosphor-color)] flex items-center gap-1.5 transition-all">
+              <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+              <span>ГЛАВНАЯ</span>
+            </button>
+            <button onclick="switchTab('facts')" id="tab-btn-facts" class="nav-tab px-3 py-1 font-pixel text-[10px] rounded border border-[var(--phosphor-dim)] hover:border-[var(--phosphor-color)] text-[var(--phosphor-dim)] hover:text-[var(--phosphor-color)] flex items-center gap-1.5 transition-all">
+              <i data-lucide="database" class="w-3.5 h-3.5"></i>
+              <span>ДОСЬЕ И АРХИВ</span>
+            </button>
+            <button onclick="switchTab('schedule')" id="tab-btn-schedule" class="nav-tab px-3 py-1 font-pixel text-[10px] rounded border border-[var(--phosphor-dim)] hover:border-[var(--phosphor-color)] text-[var(--phosphor-dim)] hover:text-[var(--phosphor-color)] flex items-center gap-1.5 transition-all">
+              <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+              <span>ВСТРЕЧА</span>
+            </button>
+            <button onclick="switchTab('terminal')" id="tab-btn-terminal" class="nav-tab px-3 py-1 font-pixel text-[10px] rounded border border-[var(--phosphor-dim)] hover:border-[var(--phosphor-color)] text-[var(--phosphor-dim)] hover:text-[var(--phosphor-color)] flex items-center gap-1.5 transition-all">
+              <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+              <span>CLI</span>
+            </button>
+          </nav>
+
+          <!-- System Clock & Uptime -->
+          <div class="hidden md:flex items-center gap-3 font-mono text-[11px] text-[var(--phosphor-dim)]">
+            <span id="systemUptime">UPTIME: 99.999%</span>
+            <span id="crtClock" class="font-bold text-[var(--phosphor-color)]">00:00:00</span>
+          </div>
+        </header>
+
+        <!-- Window Body Workspace -->
+        <div class="relative z-20 p-4 sm:p-6 md:p-8 flex-1 overflow-y-auto max-h-[600px] md:max-h-[660px]">
+          
+          <!-- TAB 1: Главная (BIOS / Core) -->
+          <section id="tab-home" class="space-y-6">
+            <!-- Greeting Banner -->
+            <div class="border border-[var(--phosphor-color)] bg-black/50 p-4 sm:p-5 rounded-lg glow-box relative overflow-hidden">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-[var(--phosphor-color)]/20 border border-[var(--phosphor-color)] text-[10px] font-pixel rounded mb-2">
+                    <span class="w-2 h-2 rounded-full bg-[var(--phosphor-color)] animate-ping"></span>
+                    СИСТЕМА: ИНИЦИАЛИЗАЦИЯ ПРАЗДНИКА
+                  </div>
+                  <h1 class="font-pixel text-lg sm:text-2xl md:text-3xl text-[var(--phosphor-color)] glow-text leading-tight">
+                    С ДНЕМ РОЖДЕНИЯ, ПАПА!
+                  </h1>
+                  <p class="font-vt text-xl sm:text-2xl text-zinc-300 mt-1">
+                    Главный Инженер Семьи • Senior Кодер Жизненного Баланса • Архитектор Финансового Успеха
+                  </p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="triggerBirthdayConfetti()" class="px-4 py-2.5 bg-[var(--phosphor-color)] text-black font-pixel text-xs rounded hover:brightness-125 transition-all shadow-[0_0_15px_var(--phosphor-glow)] flex items-center gap-2">
+                    <i data-lucide="cake" class="w-4 h-4"></i>
+                    <span>ЗАПУСТИТЬ ТОРТ.EXE</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Central Content: Dad Silhouette Hologram & System Specs Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              
+              <!-- Left: Holographic Cutout Portrait Area -->
+              <div class="lg:col-span-5 flex flex-col items-center">
+                <div class="w-full relative border-2 border-dashed border-[var(--phosphor-color)]/60 rounded-xl bg-black/40 p-4 flex flex-col items-center justify-center min-h-[380px] glow-box group">
+                  
+                  <!-- Floating Technical Markers -->
+                  <div class="absolute top-2 left-2 text-[9px] font-mono opacity-60">TARGET: DAD_HEAD_NODE</div>
+                  <div class="absolute top-2 right-2 text-[9px] font-mono opacity-60">STATUS: 100% LEGEND</div>
+                  <div class="absolute bottom-2 left-2 text-[9px] font-mono opacity-60">SECURITY: MAXIMUM</div>
+                  <div class="absolute bottom-2 right-2 text-[9px] font-mono opacity-60">FOV: 360° CARE</div>
+
+                  <!-- Scanning Line Laser Effect -->
+                  <div class="portrait-scanner"></div>
+
+                  <!-- Cutout Image Silhouette Container -->
+                  <div class="relative w-64 h-80 flex items-center justify-center overflow-hidden">
+                    <!-- Default SVG Graphic of an Engineering Dad with Glasses & Financial Charts -->
+                    <div id="dadPhotoContainer" class="w-full h-full flex items-center justify-center transition-all duration-300">
+                      <svg id="defaultSilhouette" class="w-full h-full object-contain filter drop-shadow-[0_0_12px_var(--phosphor-color)]" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Hologram Lines Effect -->
+                        <path d="M100 20 C80 20 70 35 70 55 C70 70 80 85 100 85 C120 85 130 70 130 55 C130 35 120 20 100 20Z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
+                        <!-- Dad's Classic Smart Glasses -->
+                        <rect x="80" y="48" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                        <rect x="104" y="48" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                        <line x1="96" y1="53" x2="104" y2="53" stroke="currentColor" stroke-width="2.5"/>
+                        <!-- Smile / Beard -->
+                        <path d="M92 72 Q100 78 108 72" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M85 64 Q100 85 115 64" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/>
+                        <!-- Cyber Neck & Shoulders Body Contour -->
+                        <path d="M85 85 L70 100 L40 120 L30 190 L170 190 L160 120 L130 100 L115 85 Z" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="2"/>
+                        <!-- Engineering Chest Blueprint lines -->
+                        <line x1="70" y1="120" x2="130" y2="120" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        <line x1="100" y1="100" x2="100" y2="185" stroke="currentColor" stroke-width="1.5"/>
+                        <circle cx="100" cy="140" r="14" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <!-- Heart Core Inside Dad -->
+                        <path d="M95 138 C95 134 98 132 100 134 C102 132 105 134 105 138 C105 142 100 146 100 146 C100 146 95 142 95 138 Z" fill="currentColor"/>
+                        <!-- Golden Ratio & Financial Bars -->
+                        <rect x="52" y="150" width="8" height="25" fill="currentColor" fill-opacity="0.4"/>
+                        <rect x="64" y="140" width="8" height="35" fill="currentColor" fill-opacity="0.6"/>
+                        <rect x="128" y="135" width="8" height="40" fill="currentColor" fill-opacity="0.6"/>
+                        <rect x="140" y="145" width="8" height="30" fill="currentColor" fill-opacity="0.4"/>
+                      </svg>
+                      <!-- Uploaded Custom Cutout Image (initially hidden) -->
+                      <img id="customDadImage" src="" alt="Любимый Папа" class="hidden w-full h-full object-contain filter drop-shadow-[0_0_15px_var(--phosphor-glow)]">
+                    </div>
+
+                  </div>
+
+                  <!-- Upload Custom Cutout Button -->
+                  <div class="mt-3 text-center">
+                    <label class="cursor-pointer inline-flex items-center gap-2 px-3 py-1.5 border border-[var(--phosphor-color)] bg-black/60 hover:bg-[var(--phosphor-color)]/20 text-xs font-mono rounded transition-all">
+                      <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                      <span>Загрузить фото папы (PNG без фона)</span>
+                      <input type="file" id="portraitUpload" accept="image/*" class="hidden" onchange="handleDadPortraitUpload(event)">
+                    </label>
+                    <p class="text-[10px] text-zinc-400 mt-1">Идеально смотрится вырезанная фотография по контуру</p>
+                  </div>
+                </div>
+
+                <!-- Short Status Console -->
+                <div class="w-full mt-3 p-3 bg-black/60 border border-[var(--phosphor-dim)] rounded-lg text-xs font-mono">
+                  <div class="flex justify-between border-b border-zinc-800 pb-1 mb-1">
+                    <span class="text-zinc-400">АРХИТЕКТУРА:</span>
+                    <span class="text-[var(--phosphor-color)] font-bold">PAPAL_SUPER_CORE_x64</span>
+                  </div>
+                  <div class="flex justify-between border-b border-zinc-800 pb-1 mb-1">
+                    <span class="text-zinc-400">ТЕРПЕНИЕ К ДЕТЯМ:</span>
+                    <span class="text-[var(--phosphor-color)]">∞ (БЕЗЛИМИТНО)</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-zinc-400">СТАТУС ЛЮБВИ:</span>
+                    <span class="text-[var(--phosphor-color)] animate-pulse">ОТ СЕРДЦА 100%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Engineering Specs & Heartfelt Technical Greeting -->
+              <div class="lg:col-span-7 space-y-4">
+                
+                <!-- Terminal Letter to Dad -->
+                <div class="border border-[var(--phosphor-dim)] bg-black/70 p-4 sm:p-5 rounded-lg text-sm sm:text-base leading-relaxed space-y-3 font-mono">
+                  <div class="flex items-center justify-between text-xs text-[var(--phosphor-dim)] border-b border-zinc-800 pb-2">
+                    <span class="font-pixel text-[9px] text-[var(--phosphor-color)]">MESSAGE_DECRYPTED.TXT</span>
+                    <span>ORIGIN: ТВОИ ЛЮБЯЩИЕ ДЕТИ</span>
+                  </div>
+                  <p class="text-zinc-200">
+                    <span class="text-[var(--phosphor-color)] font-bold">> ПАПА, С ДНЕМ РОЖДЕНИЯ!</span><br>
+                    Ты умеешь компилировать сложные задачи в простые и элегантные решения. Будь то сложнейший код, инженерный расчет микросхем или высокоточный финансовый портфель — в твоих руках всё работает с гарантированным аптаймом 99.99%!
+                  </p>
+                  <p class="text-zinc-300">
+                    Спасибо тебе за то, что ты не просто гениальный технарь и крутой финансист, но в первую очередь — наш самый лучший, мудрый, добрый и надежный папа на свете. Твоя поддержка надежнее любого облачного хранилища с тройным бэкапом!
+                  </p>
+                  <div class="p-3 bg-[var(--phosphor-color)]/10 border-l-4 border-[var(--phosphor-color)] text-xs text-[var(--phosphor-color)] italic">
+                    «Пусть каждый твой жизненный проект приносит максимальный ROI счастья, нервы будут крепче оптоволокна, а в семье всегда царит полный консенсус!»
+                  </div>
+                </div>
+
+                <!-- Hardware Performance Gauges (Interactive Progress Bars) -->
+                <div class="border border-[var(--phosphor-dim)] bg-black/50 p-4 rounded-lg space-y-3">
+                  <h3 class="font-pixel text-xs text-[var(--phosphor-color)] flex items-center gap-2">
+                    <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+                    <span>СИСТЕМНЫЕ МЕТРИКИ ПАПЫ [DIAGNOSTIC]</span>
+                  </h3>
+
+                  <!-- Metric 1 -->
+                  <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-mono">
+                      <span>Инженерная смекалка & Ремонт всего на свете</span>
+                      <span class="text-[var(--phosphor-color)] font-bold">100% (OVERCLOCK)</span>
+                    </div>
+                    <div class="w-full h-3 bg-zinc-900 border border-[var(--phosphor-dim)] rounded overflow-hidden p-0.5">
+                      <div class="h-full bg-[var(--phosphor-color)] rounded-sm transition-all duration-1000" style="width: 100%;"></div>
+                    </div>
+                  </div>
+
+                  <!-- Metric 2 -->
+                  <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-mono">
+                      <span>Финансовая аналитика & Точность прогнозов</span>
+                      <span class="text-[var(--phosphor-color)] font-bold">99.8% (BULL MARKET)</span>
+                    </div>
+                    <div class="w-full h-3 bg-zinc-900 border border-[var(--phosphor-dim)] rounded overflow-hidden p-0.5">
+                      <div class="h-full bg-[var(--phosphor-color)] rounded-sm transition-all duration-1000" style="width: 98%;"></div>
+                    </div>
+                  </div>
+
+                  <!-- Metric 3 -->
+                  <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-mono">
+                      <span>Юмор, теплота и забота о семье</span>
+                      <span class="text-[var(--phosphor-color)] font-bold">MAXIMUM / LIMIT EXCEEDED</span>
+                    </div>
+                    <div class="w-full h-3 bg-zinc-900 border border-[var(--phosphor-dim)] rounded overflow-hidden p-0.5">
+                      <div class="h-full bg-[var(--phosphor-color)] rounded-sm transition-all duration-1000 animate-pulse" style="width: 100%;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                  <button onclick="switchTab('facts')" class="p-3 bg-zinc-900 border border-[var(--phosphor-dim)] hover:border-[var(--phosphor-color)] hover:bg-[var(--phosphor-color)]/10 text-xs font-pixel rounded text-center transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="image" class="w-4 h-4 text-[var(--phosphor-color)]"></i>
+                    <span>ОТПУСКНЫЕ ФОТО</span>
+                  </button>
+                  <button onclick="switchTab('schedule')" class="p-3 bg-zinc-900 border border-[var(--phosphor-dim)] hover:border-[var(--phosphor-color)] hover:bg-[var(--phosphor-color)]/10 text-xs font-pixel rounded text-center transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="user-check" class="w-4 h-4 text-[var(--phosphor-color)]"></i>
+                    <span>ЗАПИСЬ К ПАПЕ</span>
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+
+          <!-- TAB 2: Факты и Архив отпусков -->
+          <section id="tab-facts" class="hidden space-y-6">
+            <div class="border-b border-[var(--phosphor-dim)] pb-3 flex items-center justify-between">
+              <div>
+                <h2 class="font-pixel text-base sm:text-xl text-[var(--phosphor-color)]">
+                  // DATABASE: ФАКТЫ О ПАПЕ И ОТПУСКНОЙ АРХИВ
+                </h2>
+                <p class="text-xs font-mono text-zinc-400 mt-1">Логи ключевых событий, профессиональные победы и лучшие воспоминания</p>
+              </div>
+              <div class="font-pixel text-xs text-[var(--phosphor-dim)] bg-zinc-900 px-2.5 py-1 rounded border border-zinc-800 hidden sm:block">
+                TOTAL_MEMORIES: 1024 GB
+              </div>
+            </div>
+
+            <!-- Engineering & Financial Fact Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              
+              <div class="border border-[var(--phosphor-dim)] bg-black/60 p-4 rounded-lg hover:border-[var(--phosphor-color)] transition-all">
+                <div class="text-[var(--phosphor-color)] mb-2 flex items-center gap-2">
+                  <i data-lucide="code-2" class="w-5 h-5"></i>
+                  <span class="font-pixel text-xs">HARDCORE CODER</span>
+                </div>
+                <h4 class="font-bold text-sm text-zinc-200">Чистый код и логика</h4>
+                <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+                  Может отдебажить любую проблему быстрее, чем компилятор выдаст предупреждение. Знает, как решить задачу любого уровня сложности!
+                </p>
+              </div>
+
+              <div class="border border-[var(--phosphor-dim)] bg-black/60 p-4 rounded-lg hover:border-[var(--phosphor-color)] transition-all">
+                <div class="text-[var(--phosphor-color)] mb-2 flex items-center gap-2">
+                  <i data-lucide="trending-up" class="w-5 h-5"></i>
+                  <span class="font-pixel text-xs">FINANCIAL GENIUS</span>
+                </div>
+                <h4 class="font-bold text-sm text-zinc-200">Финансовый консалтинг</h4>
+                <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+                  Видит графики и тренды насквозь. Знает идеальную стратегию диверсификации: 100% инвестиций в любовь, семью и радостные моменты!
+                </p>
+              </div>
+
+              <div class="border border-[var(--phosphor-dim)] bg-black/60 p-4 rounded-lg hover:border-[var(--phosphor-color)] transition-all">
+                <div class="text-[var(--phosphor-color)] mb-2 flex items-center gap-2">
+                  <i data-lucide="shield-check" class="w-5 h-5"></i>
+                  <span class="font-pixel text-xs">FAMILY HERO</span>
+                </div>
+                <h4 class="font-bold text-sm text-zinc-200">Супер-Папа 24/7</h4>
+                <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+                  Способен одновременно решать финансовые уравнения, чинить домашнюю технику и слушать наши истории, оставаясь самым добрым папой.
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Vacation Photo Gallery (Retro Polaroid / Monitor Tiles) -->
+            <div class="border border-[var(--phosphor-dim)] bg-black/50 p-4 sm:p-5 rounded-lg space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="camera" class="w-5 h-5 text-[var(--phosphor-color)]"></i>
+                  <h3 class="font-pixel text-xs sm:text-sm text-[var(--phosphor-color)]">АРХИВ ОТПУСКОВ И ПУТЕШЕСТВИЙ</h3>
+                </div>
+                <!-- Upload photos button -->
+                <label class="cursor-pointer px-3 py-1.5 bg-zinc-900 border border-[var(--phosphor-color)] hover:bg-[var(--phosphor-color)]/20 text-[10px] font-pixel rounded flex items-center gap-2 text-[var(--phosphor-color)] transition-all">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>ДОБАВИТЬ СВОИ ФОТО</span>
+                  <input type="file" id="holidayUpload" accept="image/*" multiple class="hidden" onchange="handleHolidayUpload(event)">
+                </label>
+              </div>
+
+              <!-- Photos Grid -->
+              <div id="holidayGallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-2">
+                
+                <!-- Preset Photo Card 1 -->
+                <div class="bg-zinc-950 p-2.5 border border-zinc-800 rounded-lg group hover:border-[var(--phosphor-color)] transition-all">
+                  <div class="aspect-video w-full bg-zinc-900 rounded overflow-hidden relative flex items-center justify-center border border-zinc-800">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Море и пляж" class="w-full h-full object-cover group-hover:scale-105 transition-all filter brightness-90 group-hover:brightness-100">
+                    <span class="absolute bottom-1 right-1 font-mono text-[9px] bg-black/80 text-[var(--phosphor-color)] px-1 rounded">RESORT_01.RAW</span>
+                  </div>
+                  <div class="mt-2 text-xs font-mono">
+                    <div class="text-[var(--phosphor-color)] font-bold">Морской бриз и детокс</div>
+                    <div class="text-[10px] text-zinc-500">Статус: Заслуженный отдых</div>
+                  </div>
+                </div>
+
+                <!-- Preset Photo Card 2 -->
+                <div class="bg-zinc-950 p-2.5 border border-zinc-800 rounded-lg group hover:border-[var(--phosphor-color)] transition-all">
+                  <div class="aspect-video w-full bg-zinc-900 rounded overflow-hidden relative flex items-center justify-center border border-zinc-800">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" alt="Горы" class="w-full h-full object-cover group-hover:scale-105 transition-all filter brightness-90 group-hover:brightness-100">
+                    <span class="absolute bottom-1 right-1 font-mono text-[9px] bg-black/80 text-[var(--phosphor-color)] px-1 rounded">PEAK_EXPEDITION.RAW</span>
+                  </div>
+                  <div class="mt-2 text-xs font-mono">
+                    <div class="text-[var(--phosphor-color)] font-bold">Покорение вершин</div>
+                    <div class="text-[10px] text-zinc-500">Высота: Вне зоны багов</div>
+                  </div>
+                </div>
+
+                <!-- Preset Photo Card 3 -->
+                <div class="bg-zinc-950 p-2.5 border border-zinc-800 rounded-lg group hover:border-[var(--phosphor-color)] transition-all">
+                  <div class="aspect-video w-full bg-zinc-900 rounded overflow-hidden relative flex items-center justify-center border border-zinc-800">
+                    <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80" alt="Семейный вечер" class="w-full h-full object-cover group-hover:scale-105 transition-all filter brightness-90 group-hover:brightness-100">
+                    <span class="absolute bottom-1 right-1 font-mono text-[9px] bg-black/80 text-[var(--phosphor-color)] px-1 rounded">FAMILY_DINNER.RAW</span>
+                  </div>
+                  <div class="mt-2 text-xs font-mono">
+                    <div class="text-[var(--phosphor-color)] font-bold">Семейный праздник</div>
+                    <div class="text-[10px] text-zinc-500">Тепло, тосты и улыбки</div>
+                  </div>
+                </div>
+
+                <!-- Preset Photo Card 4 -->
+                <div class="bg-zinc-950 p-2.5 border border-zinc-800 rounded-lg group hover:border-[var(--phosphor-color)] transition-all">
+                  <div class="aspect-video w-full bg-zinc-900 rounded overflow-hidden relative flex items-center justify-center border border-zinc-800">
+                    <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=80" alt="Звездное небо" class="w-full h-full object-cover group-hover:scale-105 transition-all filter brightness-90 group-hover:brightness-100">
+                    <span class="absolute bottom-1 right-1 font-mono text-[9px] bg-black/80 text-[var(--phosphor-color)] px-1 rounded">NIGHT_SKY_CAMP.RAW</span>
+                  </div>
+                  <div class="mt-2 text-xs font-mono">
+                    <div class="text-[var(--phosphor-color)] font-bold">Ночные разговоры</div>
+                    <div class="text-[10px] text-zinc-500">Разговоры о космосе и будущем</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- TAB 3: Запись на встречу (Book Meeting Terminal) -->
+          <section id="tab-schedule" class="hidden space-y-6">
+            <div class="border-b border-[var(--phosphor-dim)] pb-3">
+              <div class="inline-block px-2 py-0.5 bg-red-950 border border-red-500/50 text-red-400 font-pixel text-[9px] rounded mb-1">
+                HIGH PRIORITY DISPATCHER
+              </div>
+              <h2 class="font-pixel text-base sm:text-xl text-[var(--phosphor-color)]">
+                // ЗАПИСЬ НА ВСТРЕЧУ С САМЫМ ЛУЧШИМ ПАПОЙ НА СВЕТЕ
+              </h2>
+              <p class="text-xs font-mono text-zinc-400 mt-1">
+                Официальный протокол резервирования тайм-слота для консультаций, душевных бесед и ремонта вселенной.
+              </p>
+            </div>
+
+            <!-- Booking Form Card -->
+            <div class="max-w-2xl mx-auto border border-[var(--phosphor-dim)] bg-black/70 p-5 sm:p-7 rounded-xl glow-box relative">
+              <form id="dadMeetingForm" onsubmit="handleMeetingSubmit(event)" class="space-y-4">
+                
+                <div>
+                  <label class="block font-pixel text-[10px] text-[var(--phosphor-color)] mb-1">ВАШЕ ИМЯ ИЛИ ПОЗЫВНОЙ:</label>
+                  <input type="text" id="guestName" required placeholder="Например: Любимый клиент, коллега или друг" class="w-full bg-zinc-950 border border-[var(--phosphor-dim)] focus:border-[var(--phosphor-color)] rounded px-3 py-2 text-xs font-mono text-white outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block font-pixel text-[10px] text-[var(--phosphor-color)] mb-1">ЦЕЛЬ ВСТРЕЧИ:</label>
+                    <select id="meetingTopic" class="w-full bg-zinc-950 border border-[var(--phosphor-dim)] focus:border-[var(--phosphor-color)] rounded px-3 py-2 text-xs font-mono text-white outline-none">
+                      <option value="finance">Финансовая консультация & Аудит</option>
+                      <option value="engineering">Инженерный совет & Code Review</option>
+                      <option value="coffee">Выпить кофе и поговорить за жизнь</option>
+                      <option value="urgent">Срочно починить сломавшуюся технику</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block font-pixel text-[10px] text-[var(--phosphor-color)] mb-1">УРОВЕНЬ ВАЖНОСТИ:</label>
+                    <select id="urgencyLevel" class="w-full bg-zinc-950 border border-[var(--phosphor-dim)] focus:border-[var(--phosphor-color)] rounded px-3 py-2 text-xs font-mono text-white outline-none">
+                      <option value="1">Обычный (Критично)</option>
+                      <option value="2">Повышенный (Очень критично)</option>
+                      <option value="3">Уровень «Папа, выручай!»</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block font-pixel text-[10px] text-[var(--phosphor-color)] mb-1">ЖЕЛАЕМАЯ ДАТА:</label>
+                    <input type="date" id="meetingDate" required class="w-full bg-zinc-950 border border-[var(--phosphor-dim)] focus:border-[var(--phosphor-color)] rounded px-3 py-2 text-xs font-mono text-white outline-none">
+                  </div>
+                  <div>
+                    <label class="block font-pixel text-[10px] text-[var(--phosphor-color)] mb-1">ВРЕМЯ СЛОТА:</label>
+                    <input type="time" id="meetingTime" value="18:30" required class="w-full bg-zinc-950 border border-[var(--phosphor-dim)] focus:border-[var(--phosphor-color)] rounded px-3 py-2 text-xs font-mono text-white outline-none">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block font-pixel text-[10px] text-[var(--phosphor-color)] mb-1">КОММЕНТАРИЙ К ЗАЯВКЕ:</label>
+                  <textarea rows="3" placeholder="Опишите масштаб задачи..." class="w-full bg-zinc-950 border border-[var(--phosphor-dim)] focus:border-[var(--phosphor-color)] rounded px-3 py-2 text-xs font-mono text-white outline-none"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="bookSubmitBtn" class="w-full py-3 bg-[var(--phosphor-color)] hover:brightness-125 text-black font-pixel text-xs rounded transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_var(--phosphor-glow)]">
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                  <span>ОТПРАВИТЬ ЗАПРОС В СИСТЕМУ ПАПЫ</span>
+                </button>
+
+                <p class="text-[10px] font-mono text-zinc-500 text-center">
+                  * Все входящие запросы проходят валидацию контроллером семейного приоритета.
+                </p>
+              </form>
+            </div>
+          </section>
+
+          <!-- TAB 4: CLI Terminal / Easter Egg Shell -->
+          <section id="tab-terminal" class="hidden space-y-4">
+            <div class="border-b border-[var(--phosphor-dim)] pb-2 flex justify-between items-center">
+              <span class="font-pixel text-xs text-[var(--phosphor-color)]">TERMINAL: /bin/dad_sh (INTERACTIVE REPL)</span>
+              <span class="text-xs font-mono text-zinc-400">Введите <code class="text-[var(--phosphor-color)]">help</code></span>
+            </div>
+
+            <!-- Terminal Output Window -->
+            <div id="terminalOutput" class="h-80 bg-black/90 border border-[var(--phosphor-dim)] rounded-lg p-4 font-mono text-xs overflow-y-auto space-y-2 text-zinc-300">
+              <div class="text-[var(--phosphor-color)] font-bold">DAD-OS UNIX Shell. Версия 5.0.0-release</div>
+              <div>Добро пожаловать в командную строку! Здесь можно отправлять прямые команды в ядро.</div>
+              <div class="text-zinc-500">Доступные команды: help, cake, finance, love, clear, specs, daughters</div>
+            </div>
+
+            <!-- Terminal Input -->
+            <div class="flex items-center gap-2 bg-black border border-[var(--phosphor-color)] rounded p-2">
+              <span class="text-[var(--phosphor-color)] font-bold text-sm">></span>
+              <input type="text" id="cliInput" onkeydown="handleCliKeyDown(event)" placeholder="Введите команду (например: help)..." class="w-full bg-transparent text-[var(--phosphor-color)] outline-none font-mono text-xs">
+              <button onclick="executeCliCommand()" class="px-3 py-1 bg-[var(--phosphor-dim)] hover:bg-[var(--phosphor-color)] hover:text-black text-xs font-pixel rounded transition-all">ENTER</button>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- CRT Monitor Bottom Hardware Bar (Buttons, LEDs, Brand Logo) -->
+        <footer class="relative z-30 px-4 py-2 border-t border-[var(--phosphor-dim)] bg-black/75 backdrop-blur flex items-center justify-between text-xs font-mono">
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]"></span>
+              <span class="text-[10px] text-zinc-400 hidden sm:inline">POWER: OK</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+              <span class="text-[10px] text-zinc-400 hidden sm:inline">LOVE_BUS: ACTIVE</span>
+            </div>
+          </div>
+
+          <div class="text-[10px] font-pixel text-zinc-400 tracking-wider">
+            [ С ЛЮБОВЬЮ ОТ ДЕТЕЙ • 2026 ]
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="toggleMatrixBackground()" title="Переключить фон матрицы" class="px-2 py-0.5 rounded border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white text-[10px] font-mono flex items-center gap-1">
+              <i data-lucide="matrix" class="w-3 h-3"></i>
+              <span class="hidden sm:inline">MATRIX</span>
+            </button>
+            <button onclick="togglePower()" title="Выключить/включить экран" class="px-2.5 py-1 rounded border border-red-700 bg-red-950/80 hover:bg-red-800 text-red-300 text-[10px] font-pixel flex items-center gap-1 transition-all">
+              <i data-lucide="power" class="w-3 h-3"></i>
+              <span>PWR</span>
+            </button>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL: System Error 403 / Dad Slot Blocked -->
+  <div id="dadBusyModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full border-2 border-red-500 bg-zinc-950 rounded-xl p-5 sm:p-6 shadow-[0_0_50px_rgba(239,68,68,0.5)] transform scale-95 transition-all text-center space-y-4">
+      
+      <!-- Blinking Warning Icon -->
+      <div class="w-16 h-16 mx-auto rounded-full bg-red-500/20 border-2 border-red-500 flex items-center justify-center text-red-500 animate-bounce">
+        <i data-lucide="alert-octagon" class="w-10 h-10"></i>
+      </div>
+
+      <div class="space-y-1">
+        <div class="inline-block px-2.5 py-0.5 bg-red-900/60 border border-red-500 text-red-300 font-pixel text-[9px] rounded">
+          CRITICAL PERMISSION DENIED // ERR_403
+        </div>
+        <h3 class="font-pixel text-base sm:text-lg text-red-400 glow-text pt-2">
+          ДОСТУП ЗАБЛОКИРОВАН!
+        </h3>
+      </div>
+
+      <div class="p-3 bg-red-950/40 border border-red-800/80 rounded-lg text-sm sm:text-base font-mono text-zinc-200 leading-snug">
+        «Мой папа уже занят мной и моими сестрами, попробуйте в следующий раз!» ❤️👨‍👧‍👧
+      </div>
+
+      <p class="text-xs font-mono text-zinc-400">
+        Системный протокол: Семейный приоритет переопределяет любые входящие запросы с бесконечным приоритетом.
+      </p>
+
+      <div class="pt-2 flex flex-col gap-2">
+        <button onclick="closeErrorModal()" class="w-full py-2.5 bg-red-600 hover:bg-red-500 text-white font-pixel text-xs rounded transition-all shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+          ПОНЯТНО, ПАПА НА РАСХВАТ!
+        </button>
+        <button onclick="tryHackSystem()" class="w-full py-2 bg-transparent hover:bg-zinc-900 border border-zinc-700 text-zinc-400 font-mono text-xs rounded transition-all">
+          Попробовать взломать приоритет (Бесполезно)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    /* ========================================================
+     * 1. RETRO AUDIO SYNTHESIZER (Web Audio API)
+     * ======================================================== */
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playBeep(freq = 600, type = 'square', duration = 0.08, gainVal = 0.06) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.warn('Audio not allowed yet:', e);
+      }
+    }
+
+    function playErrorBuzzer() {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.setValueAtTime(95, now + 0.15);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.45);
+      } catch (e) {}
+    }
+
+    function playCelebrationFanfare() {
+      if (!soundEnabled) return;
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, idx) => {
+        setTimeout(() => playBeep(freq, 'triangle', 0.18, 0.1), idx * 120);
+      });
+    }
+
+    function toggleAudio() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('soundToggleBtn');
+      if (soundEnabled) {
+        btn.innerHTML = `<i data-lucide="volume-2" class="w-3.5 h-3.5"></i> <span>SFX: ON</span>`;
+        btn.classList.remove('opacity-50');
+        playBeep(880, 'sine', 0.1);
+      } else {
+        btn.innerHTML = `<i data-lucide="volume-x" class="w-3.5 h-3.5"></i> <span>SFX: OFF</span>`;
+        btn.classList.add('opacity-50');
+      }
+      lucide.createIcons();
+    }
+
+    /* ========================================================
+     * 2. THEME & PHOSPHOR COLOR SWITCHER
+     * ======================================================== */
+    function setTheme(color) {
+      playBeep(750, 'sine', 0.05);
+      if (color === 'green') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', color);
+      }
+    }
+
+    /* ========================================================
+     * 3. WINDOW & TAB SWITCHER
+     * ======================================================== */
+    const tabList = ['home', 'facts', 'schedule', 'terminal'];
+
+    function switchTab(tabId) {
+      playBeep(900, 'square', 0.04);
+      tabList.forEach(id => {
+        const section = document.getElementById(`tab-${id}`);
+        const btn = document.getElementById(`tab-btn-${id}`);
+        if (id === tabId) {
+          section.classList.remove('hidden');
+          btn.classList.add('active-tab', 'border-[var(--phosphor-color)]', 'bg-[var(--phosphor-dim)]/40', 'text-[var(--phosphor-color)]');
+          btn.classList.remove('border-[var(--phosphor-dim)]', 'text-[var(--phosphor-dim)]');
+        } else {
+          section.classList.add('hidden');
+          btn.classList.remove('active-tab', 'border-[var(--phosphor-color)]', 'bg-[var(--phosphor-dim)]/40', 'text-[var(--phosphor-color)]');
+          btn.classList.add('border-[var(--phosphor-dim)]', 'text-[var(--phosphor-dim)]');
+        }
+      });
+    }
+
+    /* ========================================================
+     * 4. CRT POWER & MATRIX ANIMATION
+     * ======================================================== */
+    let screenPowered = true;
+    function togglePower() {
+      const screen = document.getElementById('screenContainer');
+      if (screenPowered) {
+        playBeep(220, 'sawtooth', 0.3);
+        screen.classList.add('power-off');
+        screen.classList.remove('power-on');
+        screenPowered = false;
+      } else {
+        playBeep(880, 'sine', 0.4);
+        screen.classList.remove('power-off');
+        screen.classList.add('power-on');
+        screenPowered = true;
+      }
+    }
+
+    /* Background Matrix Digital Rain */
+    const canvas = document.getElementById('circuit-bg');
+    const ctx = canvas.getContext('2d');
+    let matrixActive = true;
+    let characters = '01010101010189ABCDEF$#@%&*DAD-5.0';
+    let fontSize = 14;
+    let columns = 0;
+    let drops = [];
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = [];
+      for (let i = 0; i < columns; i++) {
+        drops[i] = Math.floor(Math.random() * -50);
+      }
+    }
+
+    function drawMatrix() {
+      if (!matrixActive || !screenPowered) return;
+      ctx.fillStyle = 'rgba(3, 20, 8, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--phosphor-color').trim() || '#00ff66';
+      ctx.font = `${fontSize}px 'VT323', monospace`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = characters.charAt(Math.floor(Math.random() * characters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    function toggleMatrixBackground() {
+      matrixActive = !matrixActive;
+      playBeep(620, 'sine', 0.05);
+      if (!matrixActive) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    /* ========================================================
+     * 5. DAD CUTOUT PORTRAIT & HOLIDAY UPLOADS
+     * ======================================================== */
+    function handleDadPortraitUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = document.getElementById('customDadImage');
+        const defaultSvg = document.getElementById('defaultSilhouette');
+        img.src = event.target.result;
+        img.classList.remove('hidden');
+        defaultSvg.classList.add('hidden');
+        playCelebrationFanfare();
+        triggerBirthdayConfetti();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleHolidayUpload(e) {
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+
+      const gallery = document.getElementById('holidayGallery');
+      files.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          const card = document.createElement('div');
+          card.className = 'bg-zinc-950 p-2.5 border border-zinc-800 rounded-lg group hover:border-[var(--phosphor-color)] transition-all animate-pulse';
+          card.innerHTML = `
+            <div class="aspect-video w-full bg-zinc-900 rounded overflow-hidden relative flex items-center justify-center border border-zinc-800">
+              <img src="${ev.target.result}" alt="Отпускное фото" class="w-full h-full object-cover group-hover:scale-105 transition-all">
+              <span class="absolute bottom-1 right-1 font-mono text-[9px] bg-black/80 text-[var(--phosphor-color)] px-1 rounded">DAD_MEMORY_${index + 10}.RAW</span>
+            </div>
+            <div class="mt-2 text-xs font-mono">
+              <div class="text-[var(--phosphor-color)] font-bold">Счастливый кадр</div>
+              <div class="text-[10px] text-zinc-500">Загружено из личного архива</div>
+            </div>
+          `;
+          gallery.prepend(card);
+          setTimeout(() => card.classList.remove('animate-pulse'), 1200);
+        };
+        reader.readAsDataURL(file);
+      });
+      playBeep(980, 'sine', 0.1);
+    }
+
+    /* ========================================================
+     * 6. SCHEDULE MEETING: COMPUTATION & ERROR 403 MODAL
+     * ======================================================== */
+    function handleMeetingSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('bookSubmitBtn');
+      const originalText = submitBtn.innerHTML;
+
+      // Simulate heavy technical server processing
+      playBeep(440, 'triangle', 0.15);
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <span class="inline-block w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
+        <span>ПРОВЕРКА РАСПИСАНИЯ ПАПЫ В СЕТИ...</span>
+      `;
+
+      setTimeout(() => {
+        submitBtn.innerHTML = `<span>РАСЧЕТ ВРЕМЕННЫХ ОКОН...</span>`;
+        playBeep(520, 'triangle', 0.1);
+      }, 700);
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        playErrorBuzzer();
+        document.getElementById('dadBusyModal').classList.remove('hidden');
+      }, 1500);
+    }
+
+    function closeErrorModal() {
+      playBeep(500, 'square', 0.05);
+      document.getElementById('dadBusyModal').classList.add('hidden');
+    }
+
+    function tryHackSystem() {
+      playErrorBuzzer();
+      const btn = event.currentTarget;
+      btn.innerText = "ОШИБКА: ЛЮБОВЬ ДЕТЕЙ НЕВЗЛОМАЕМА! ❤️";
+      btn.classList.add('text-red-400', 'border-red-500');
+      setTimeout(() => {
+        btn.innerText = "Попробовать взломать приоритет (Бесполезно)";
+        btn.classList.remove('text-red-400', 'border-red-500');
+      }, 2500);
+    }
+
+    /* ========================================================
+     * 7. CLI SHELL / EASTER EGGS
+     * ======================================================== */
+    function printCli(text, isCommand = false, isHighlight = false) {
+      const out = document.getElementById('terminalOutput');
+      const row = document.createElement('div');
+      if (isCommand) {
+        row.className = 'text-[var(--phosphor-color)] font-bold';
+        row.textContent = `guest@dad-pc:~$ ${text}`;
+      } else if (isHighlight) {
+        row.className = 'text-yellow-400 font-bold';
+        row.textContent = text;
+      } else {
+        row.textContent = text;
+      }
+      out.appendChild(row);
+      out.scrollTop = out.scrollHeight;
+    }
+
+    function handleCliKeyDown(e) {
+      if (e.key === 'Enter') {
+        executeCliCommand();
+      }
+    }
+
+    function executeCliCommand() {
+      const input = document.getElementById('cliInput');
+      const val = input.value.trim().toLowerCase();
+      if (!val) return;
+
+      printCli(val, true);
+      input.value = '';
+      playBeep(650, 'square', 0.03);
+
+      switch (val) {
+        case 'help':
+          printCli("КОМАНДЫ CLI:");
+          printCli("  cake       - доставить виртуальный праздничный торт");
+          printCli("  finance    - запросить совет финансового консультанта");
+          printCli("  beer       - налить кружку пенного для инженера");
+          printCli("  love       - отправить сигнал бесконечной любви");
+          printCli("  daughters  - статус дочерей и семьи");
+          printCli("  specs      - показать полные ТТХ Папы v5.0");
+          printCli("  clear      - очистить экран терминала");
+          break;
+        case 'cake':
+          printCli("🎂 [ТОРТ ДОСТАВЛЕН] 5.0 звезд из 5! Сладкой жизни и крепкого здоровья!");
+          triggerBirthdayConfetti();
+          playCelebrationFanfare();
+          break;
+        case 'finance':
+          printCli("📈 СОВЕТ ЭКСПЕРТА: Инвестируйте в улыбки детей и здоровье. Дивиденды — 1000% годовых!");
+          break;
+        case 'beer':
+          printCli("🍺 Чин-чин, Папа! За твои инженерные успехи и железное здоровье!");
+          break;
+        case 'love':
+          printCli("❤️ ПАПА, МЫ ТЕБЯ ОЧЕНЬ СИЛЬНО ЛЮБИМ! ТЫ САМЫЙ ЛУЧШИЙ!");
+          triggerBirthdayConfetti();
+          break;
+        case 'daughters':
+          printCli("👨‍👧‍👧 ДОЧЕРИ И СЕМЬЯ: Занимают 100% серверных мощностей сердца папы.");
+          break;
+        case 'specs':
+          printCli("ТТХ: Инженерный гений = MAX | Терпение = INFINITY | Любовь = ABSOLUTE");
+          break;
+        case 'clear':
+          document.getElementById('terminalOutput').innerHTML = '';
+          break;
+        default:
+          printCli(`Команда не найдена: '${val}'. Введите 'help' для списка.`);
+          playBeep(200, 'sawtooth', 0.1);
+          break;
+      }
+    }
+
+    /* ========================================================
+     * 8. BIRTHDAY CONFETTI & REALTIME CLOCK
+     * ======================================================== */
+    function triggerBirthdayConfetti() {
+      playCelebrationFanfare();
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#00ff66', '#00f0ff', '#ffb000', '#ffffff', '#ff3366']
+        });
+      }
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toTimeString().split(' ')[0];
+      const clockEl = document.getElementById('crtClock');
+      if (clockEl) clockEl.textContent = timeStr;
+    }
+
+    // Set initial date in form to tomorrow
+    window.addEventListener('load', () => {
+      lucide.createIcons();
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      setInterval(drawMatrix, 45);
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      const dateInput = document.getElementById('meetingDate');
+      if (dateInput) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dateInput.value = tomorrow.toISOString().split('T')[0];
+      }
+    });
+  </script>
+</body>
+</html>
